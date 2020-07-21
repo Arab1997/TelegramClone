@@ -3,17 +3,14 @@ package myway.telegram
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
-import com.mikepenz.materialdrawer.AccountHeader
-import com.mikepenz.materialdrawer.AccountHeaderBuilder
-import com.mikepenz.materialdrawer.Drawer
-import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import myway.telegram.databinding.ActivityMainBinding
+import myway.telegram.ui.fragments.ChatsFragment
+import myway.telegram.ui.objects.AppDrawer
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mBinding: ActivityMainBinding
-    private lateinit var mDrawer: Drawer
-    private lateinit var mHeader: AccountHeader
+    private lateinit var mAppDrawer: AppDrawer
     private lateinit var mToolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,21 +30,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun initFunc() {
         setSupportActionBar(mToolbar)
-        createHeader()
+        mAppDrawer.create()
+        supportFragmentManager.beginTransaction()    // begin with chatsfragment
+            .replace(R.id.dataContainer,
+                ChatsFragment()
+            ).commit()
+
     }
 
-    private fun createHeader() {
-        mHeader = AccountHeaderBuilder()
-            .withActivity(this)
-            .withHeaderBackground(R.drawable.header)
-            .addProfiles(
-                ProfileDrawerItem().withName("Makhmudov")
-                    .withEmail("+998933769197")
-            ).build()
-    }
 
     private fun initFields() {
         mToolbar = mBinding.mainToolbar
-
+        mAppDrawer = AppDrawer(this, mToolbar)
     }
 }
