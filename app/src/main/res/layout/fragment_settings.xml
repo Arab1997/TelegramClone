@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/app_margin"
             android:layout_marginTop="@dimen/app_small_margin"
-            tools:text="@string/settings_default_username"
+            tools:text="@string/makhmudov"
             android:textColor="@color/colorAccent"
             android:textSize="@dimen/normalText"
             app:layout_constraintEnd_toEndOf="parent"
