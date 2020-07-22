@@ -13,6 +13,7 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import myway.telegram.R
 import myway.telegram.ui.fragments.SettingsFragment
+import myway.telegram.utilits.replaceFragment
 
 class AppDrawer (val mainActivity: AppCompatActivity,val toolbar: Toolbar) {
 
@@ -87,11 +88,9 @@ class AppDrawer (val mainActivity: AppCompatActivity,val toolbar: Toolbar) {
                     drawerItem: IDrawerItem<*>
                 ): Boolean {
                     when (position) {
-                        7 ->mainActivity.supportFragmentManager.beginTransaction()    // begin with settingFragments
-                            .addToBackStack(null)   // back to chats
-                            .replace(R.id.dataContainer,
-                                SettingsFragment()
-                            ).commit()
+                        7 ->
+
+                            mainActivity.replaceFragment(SettingsFragment())    // begin with settingFragments
                     }
                     return false
                 }

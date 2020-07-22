@@ -8,6 +8,8 @@ import myway.telegram.activities.RegisterActivity
 import myway.telegram.databinding.ActivityMainBinding
 import myway.telegram.ui.fragments.ChatsFragment
 import myway.telegram.ui.objects.AppDrawer
+import myway.telegram.utilits.replaceActivity
+import myway.telegram.utilits.replaceFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,8 +22,6 @@ class MainActivity : AppCompatActivity() {
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         // setContentView(R.layout.activity_main)
         setContentView(mBinding.root)
-
-
     }
 
     override fun onStart() {
@@ -29,24 +29,15 @@ class MainActivity : AppCompatActivity() {
         initFields()
         initFunc()
     }
-
     private fun initFunc() {
-        if(false){
+        if (true) {
             setSupportActionBar(mToolbar)
             mAppDrawer.create()
-            supportFragmentManager.beginTransaction()    // begin with chatsfragment
-                .replace(R.id.dataContainer,
-                    ChatsFragment()
-                ).commit()
-        }else{
-            val intent  = Intent(this, RegisterActivity::class.java)
-            startActivity(intent)
+            replaceFragment(ChatsFragment())
+        } else {
+            replaceActivity(RegisterActivity())
         }
-
-
     }
-
-
     private fun initFields() {
         mToolbar = mBinding.mainToolbar
         mAppDrawer = AppDrawer(this, mToolbar)
