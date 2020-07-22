@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar
 import myway.telegram.R
 import myway.telegram.databinding.ActivityRegisterBinding
 import myway.telegram.ui.fragments.EnterPhoneNumberFragment
+import myway.telegram.utilits.initFirebase
 import myway.telegram.utilits.replaceFragment
 
 class RegisterActivity : AppCompatActivity() {
@@ -17,7 +18,7 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mBinding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
-
+        initFirebase()
     }
     override fun onStart() {
         super.onStart()
