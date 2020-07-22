@@ -42,17 +42,17 @@ class AppDrawer (val mainActivity: AppCompatActivity,val toolbar: Toolbar) {
                     .withIconTintingEnabled(true)
                     .withName("Создать секретный чат")
                     .withSelectable(false)
-                    .withIcon(R.drawable.team),
+                    .withIcon(R.drawable.lock),
                 PrimaryDrawerItem().withIdentifier(102)
                     .withIconTintingEnabled(true)
                     .withName("Создать канал")
                     .withSelectable(false)
-                    .withIcon(R.drawable.team), //
+                    .withIcon(R.drawable.karnay5), //
                 PrimaryDrawerItem().withIdentifier(103)
                     .withIconTintingEnabled(true)
                     .withName("Контакты")
                     .withSelectable(false)
-                    .withIcon(R.drawable.user),
+                    .withIcon(R.drawable.contact),
                 PrimaryDrawerItem().withIdentifier(104)
                     .withIconTintingEnabled(true)
                     .withName("Звонки")
@@ -78,7 +78,7 @@ class AppDrawer (val mainActivity: AppCompatActivity,val toolbar: Toolbar) {
                     .withIconTintingEnabled(true)
                     .withName("Вопросы о Telegram")
                     .withSelectable(false)
-                    .withIcon(R.drawable.question)
+                    .withIcon(R.drawable.question2)
 
             ).withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
                 override fun onItemClick(
@@ -87,7 +87,7 @@ class AppDrawer (val mainActivity: AppCompatActivity,val toolbar: Toolbar) {
                     drawerItem: IDrawerItem<*>
                 ): Boolean {
                     when (position) {
-                        6 ->mainActivity.supportFragmentManager.beginTransaction()    // begin with settingFragments
+                        7 ->mainActivity.supportFragmentManager.beginTransaction()    // begin with settingFragments
                             .addToBackStack(null)   // back to chats
                             .replace(R.id.dataContainer,
                                 SettingsFragment()

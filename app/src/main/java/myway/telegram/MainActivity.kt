@@ -1,8 +1,10 @@
 package myway.telegram
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
+import myway.telegram.activities.RegisterActivity
 import myway.telegram.databinding.ActivityMainBinding
 import myway.telegram.ui.fragments.ChatsFragment
 import myway.telegram.ui.objects.AppDrawer
@@ -29,12 +31,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initFunc() {
-        setSupportActionBar(mToolbar)
-        mAppDrawer.create()
-        supportFragmentManager.beginTransaction()    // begin with chatsfragment
-            .replace(R.id.dataContainer,
-                ChatsFragment()
-            ).commit()
+        if(false){
+            setSupportActionBar(mToolbar)
+            mAppDrawer.create()
+            supportFragmentManager.beginTransaction()    // begin with chatsfragment
+                .replace(R.id.dataContainer,
+                    ChatsFragment()
+                ).commit()
+        }else{
+            val intent  = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+        }
+
 
     }
 
