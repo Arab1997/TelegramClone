@@ -1,8 +1,12 @@
 package myway.telegram.ui.objects
 
+import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
 import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
 import com.mikepenz.materialdrawer.Drawer
@@ -11,22 +15,61 @@ import com.mikepenz.materialdrawer.model.DividerDrawerItem
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
+import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader
+import com.mikepenz.materialdrawer.util.DrawerImageLoader
 import myway.telegram.R
 import myway.telegram.ui.fragments.SettingsFragment
 import myway.telegram.utilits.replaceFragment
 
-class AppDrawer (val mainActivity: AppCompatActivity,val toolbar: Toolbar) {
 
+/* Обьект реализующий боковое меню Navigation Drawer */
+
+class AppDrawer(val mainActivity: AppCompatActivity, val toolbar: Toolbar) {
+    //class AppDrawer  {
+    private lateinit var mCurrentProfile: ProfileDrawerItem
     private lateinit var mDrawer: Drawer
     private lateinit var mHeader: AccountHeader
+    private lateinit var mDrawerLayout: DrawerLayout
 
 
-    fun create(){
+    fun create() {
+        /* Создания бокового меню */
         createHeader()
         creteDrawer()
+        mDrawerLayout = mDrawer.drawerLayout
+    }
+
+    fun disableDrawer() {
+        /* Отключение выдвигающего меню */
+        mDrawer.actionBarDrawerToggle?.isDrawerIndicatorEnabled = false
+        mainActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        /*mainActivity.mToolbar.setNavigationOnClickListener {
+            mainActivity.supportFragmentManager.popBackStack()
+        }*/
+
+        toolbar.setNavigationOnClickListener {
+            mainActivity.supportFragmentManager.popBackStack()
+        }
+    }
+
+
+    fun enableDrawer() {
+        /* Включение выдвигающего меню */
+        mainActivity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        mDrawer.actionBarDrawerToggle?.isDrawerIndicatorEnabled = true
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+       /* mainActivity.mToolbar.setNavigationOnClickListener {
+            mDrawer.openDrawer()
+        }*/
+
+        toolbar.setNavigationOnClickListener {
+            mDrawer.openDrawer()
+        }
     }
 
     private fun creteDrawer() {
+        /* Отключение выдвигающего меню */
         mDrawer = DrawerBuilder()
             .withActivity(mainActivity)
             .withToolbar(toolbar)
@@ -98,7 +141,36 @@ class AppDrawer (val mainActivity: AppCompatActivity,val toolbar: Toolbar) {
 
     }
 
+    /*  private fun clickToItem(position:Int){
+          when (position) {
+              7 -> replaceFragment(SettingsFragment())
+              4 -> replaceFragment(ContactsFragment())
+          }
+      }
+
+
+      fun updateHeader(){
+          *//* Обновления хедера *//*
+        mCurrentProfile
+            .withName(USER.fullname)
+            .withEmail(USER.phone)
+            .withIcon(USER.photoUrl)
+
+        mHeader.updateProfile(mCurrentProfile)
+
+    }*/
+
+    /*private fun initLoader(){
+        *//* Инициализация лоадера для загрузки картинок в хедер *//*
+        DrawerImageLoader.init(object : AbstractDrawerImageLoader(){
+            override fun set(imageView: ImageView, uri: Uri, placeholder: Drawable) {
+                imageView.downloadAndSetImage(uri.toString())
+            }
+        })
+    }*/
+
     private fun createHeader() {
+        /* Создание хедера*/
         mHeader = AccountHeaderBuilder()
             .withActivity(mainActivity)
             .withHeaderBackground(R.drawable.header)

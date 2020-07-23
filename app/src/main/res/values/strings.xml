@@ -11,7 +11,6 @@
     <string name="cd_register_image">register_image</string>
 
 
-
     <string name="settings_text_account">Аккаунт</string>
     <string name="settings_default_bio">О себе</string>
 
@@ -29,7 +28,6 @@
     <string name="settings_hint_input_name">Имя</string>
     <string name="settings_hint_input_surname">Фамилия</string>
     <string name="settings_toast_name_is_empty">Имя не может быть пустым</string>
-    <string name="toast_data_update">Данные обновлены</string>
     <string name="settings_hint_input_username">username</string>
     <string name="settings_input_bio">bio</string>
 
@@ -40,4 +38,5 @@
     <string name="setting_menu_exit">Выход</string>
     <string name="register_title_your_phone">Ваш телефон</string>
     <string name="register_toast_enter">Введите номер телефона</string>
+    <string name="toast_data_update">Данные обнавлены</string>
 </resources>
