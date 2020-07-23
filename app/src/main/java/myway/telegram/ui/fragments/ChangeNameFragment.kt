@@ -13,7 +13,9 @@ class ChangeNameFragment : Fragment(R.layout.fragment_change_name) {
     override fun onStart() {
         super.onStart()
         setHasOptionsMenu(true)
-        (activity as MainActivity).mAppDrawer.disableDrawer()
+        //(activity as MainActivity).mAppDrawer.disableDrawer()
+        initFullnameList()
+
     }
 
 
@@ -26,7 +28,7 @@ class ChangeNameFragment : Fragment(R.layout.fragment_change_name) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         /* Слушатель выбора пункта выпадающего меню */
         when (item.itemId) {
-            R.id.settings_confirm_change -> change()
+            R.id.settings_confirm_change -> changeName()
         }
         return true
     }
@@ -40,7 +42,7 @@ class ChangeNameFragment : Fragment(R.layout.fragment_change_name) {
         } else settings_input_name.setText(fullnameList[0])
     }
 
-    fun change() {
+    fun changeName() {
         val name = settings_input_name.text.toString()
         val surname = settings_input_surname.text.toString()
         if (name.isEmpty()){

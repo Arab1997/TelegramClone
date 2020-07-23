@@ -5,14 +5,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import myway.telegram.activities.RegisterActivity
 import myway.telegram.databinding.ActivityMainBinding
+import myway.telegram.models.User
 import myway.telegram.ui.fragments.ChatsFragment
 import myway.telegram.ui.objects.AppDrawer
-import myway.telegram.utilits.AUTH
-import myway.telegram.utilits.initFirebase
-import myway.telegram.utilits.replaceActivity
-import myway.telegram.utilits.replaceFragment
+import myway.telegram.utilits.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -51,4 +52,13 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun initUser() {
+        REF_DB_ROOT.child(NODE_USERS).child(UID)
+            .addListenerForSingleValueEvent(AppValueEventListener{
+                USER = it.getValue(User::class.java) ?:User()// ? elves operator
+            })
+
+
+
+    }
 }
