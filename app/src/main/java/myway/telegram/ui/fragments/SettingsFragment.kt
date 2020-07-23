@@ -20,7 +20,6 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
     override fun onResume() {
         super.onResume()
         setHasOptionsMenu(true)
-
         initFields()
 
     }
@@ -32,26 +31,21 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         settings_username.text = USER.username
         settings_btn_change_username.setOnClickListener { replaceFragment(ChangeUsernameFragment()) }
         settings_btn_change_bio.setOnClickListener { replaceFragment(ChangeBioFragment()) }
-        settings_change_photo.setOnClickListener { changePhotoUser() }
+      //  settings_change_photo.setOnClickListener { changePhotoUser() }
         //settings_user_photo.downloadAndSetImage(USER.photoUrl)
     }
-
-
-    private fun changePhotoUser() {
-        /* Изменения фото пользователя */
+   /* private fun changePhotoUser() {
+        *//* Изменения фото пользователя *//*
         CropImage.activity()
             .setAspectRatio(1, 1)
             .setRequestedSize(250, 250)
             .setCropShape(CropImageView.CropShape.OVAL)
-            .start(APP_ACTIVITY,this)
-    }
-
+            .start(main,this)
+    }*/
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         /* Создания выпадающего меню*/
         activity?.menuInflater?.inflate(R.menu.settings_actions_menu, menu)
-
     }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         /* Слушатель выбора пунктов выпадающего меню */
         when (item.itemId) {
@@ -61,10 +55,8 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
             }
             R.id.settings_menu_change_name -> replaceFragment(ChangeNameFragment())
         }
-
         return true
     }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         /* Активность которая запускается для получения картинки для фото пользователя */

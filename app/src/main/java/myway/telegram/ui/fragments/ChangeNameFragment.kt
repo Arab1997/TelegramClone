@@ -8,7 +8,7 @@ import myway.telegram.R
 import myway.telegram.models.User
 import myway.telegram.utilits.*
 
-class ChangeNameFragment : Fragment(R.layout.fragment_change_name) {
+class ChangeNameFragment : BaseFragment(R.layout.fragment_change_name) {
 
     override fun onStart() {
         super.onStart()
@@ -17,9 +17,6 @@ class ChangeNameFragment : Fragment(R.layout.fragment_change_name) {
         initFullnameList()
 
     }
-
-
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         /* Создание выпадающего меню*/
         (activity as MainActivity).menuInflater.inflate(R.menu.settings_menu_confirm, menu)
@@ -45,20 +42,20 @@ class ChangeNameFragment : Fragment(R.layout.fragment_change_name) {
     fun changeName() {
         val name = settings_input_name.text.toString()
         val surname = settings_input_surname.text.toString()
-        if (name.isEmpty()){
+        if (name.isEmpty()) {
             showToast(getString(R.string.settings_toast_name_is_empty))
         } else {
             val fullname = "$name $surname"
             REF_DB_ROOT.child(NODE_USERS).child(UID).child(CHILD_FULLNAME)
                 .setValue(fullname).addOnCompleteListener {
-                    if (it.isSuccessful){
+                    if (it.isSuccessful) {
                         showToast(getString(R.string.toast_data_update))
                         USER.fullname = fullname
                         fragmentManager?.popBackStack()
                     }
                 }
 
-          //  setNameToDatabase(fullname)
+            //  setNameToDatabase(fullname)
         }
     }
 }

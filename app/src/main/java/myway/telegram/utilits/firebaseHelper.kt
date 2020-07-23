@@ -9,10 +9,9 @@ import myway.telegram.models.User
 lateinit var AUTH: FirebaseAuth
 lateinit var USER: User
 lateinit var UID:String
-lateinit var REF_DB_ROOT: DatabaseReference
-
 lateinit var CURRENT_UID: String
-lateinit var REF_DATABASE_ROOT: DatabaseReference
+
+lateinit var REF_DB_ROOT: DatabaseReference
 lateinit var REF_STORAGE_ROOT: StorageReference
 
 const val TYPE_TEXT = "text"
