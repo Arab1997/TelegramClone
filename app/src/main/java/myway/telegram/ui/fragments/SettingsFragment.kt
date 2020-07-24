@@ -44,7 +44,6 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
             .setAspectRatio(1, 1)
             .setRequestedSize(250, 250)
             .setCropShape(CropImageView.CropShape.OVAL)
-            //.start(APP_ACTIVITY,this)
             .start(APP_ACTIVITY, this)
     }
 
@@ -83,6 +82,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
                         settings_user_photo.downloadAndSetImage(it)
                         showToast(getString(R.string.toast_data_update))
                         USER.photoUrl = it
+                        APP_ACTIVITY.mAppDrawer.updateHeader()
 
                     }
 

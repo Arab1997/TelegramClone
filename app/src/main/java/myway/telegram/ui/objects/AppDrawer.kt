@@ -19,6 +19,8 @@ import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader
 import com.mikepenz.materialdrawer.util.DrawerImageLoader
 import myway.telegram.R
 import myway.telegram.ui.fragments.SettingsFragment
+import myway.telegram.utilits.USER
+import myway.telegram.utilits.downloadAndSetImage
 import myway.telegram.utilits.replaceFragment
 
 
@@ -34,6 +36,7 @@ class AppDrawer(val mainActivity: AppCompatActivity, val toolbar: Toolbar) {
 
     fun create() {
         /* Создания бокового меню */
+        initLoader()
         createHeader()
         creteDrawer()
         mDrawerLayout = mDrawer.drawerLayout
@@ -59,9 +62,13 @@ class AppDrawer(val mainActivity: AppCompatActivity, val toolbar: Toolbar) {
         mainActivity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
         mDrawer.actionBarDrawerToggle?.isDrawerIndicatorEnabled = true
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-       /* mainActivity.mToolbar.setNavigationOnClickListener {
+        toolbar.setNavigationOnClickListener {
             mDrawer.openDrawer()
-        }*/
+        }
+
+        /* mainActivity.mToolbar.setNavigationOnClickListener {
+             mDrawer.openDrawer()
+         }*/
 
         toolbar.setNavigationOnClickListener {
             mDrawer.openDrawer()
@@ -132,7 +139,6 @@ class AppDrawer(val mainActivity: AppCompatActivity, val toolbar: Toolbar) {
                 ): Boolean {
                     when (position) {
                         7 ->
-
                             mainActivity.replaceFragment(SettingsFragment())    // begin with settingFragments
                     }
                     return false
@@ -170,14 +176,36 @@ class AppDrawer(val mainActivity: AppCompatActivity, val toolbar: Toolbar) {
     }*/
 
     private fun createHeader() {
+        mCurrentProfile = ProfileDrawerItem()
+            .withName(USER.fullname)
+            .withEmail(USER.phone)
+            .withIcon(USER.photoUrl)
+            .withIdentifier(200)
         /* Создание хедера*/
         mHeader = AccountHeaderBuilder()
             .withActivity(mainActivity)
             .withHeaderBackground(R.drawable.header)
             .addProfiles(
-                ProfileDrawerItem().withName("Makhmudov")
-                    .withEmail("+998933769197")
+                mCurrentProfile
             ).build()
+    }
+
+    fun updateHeader() {
+        mCurrentProfile = ProfileDrawerItem()
+            .withName(USER.fullname)
+            .withEmail(USER.phone)
+            .withIcon(USER.photoUrl)
+
+        mHeader.updateProfile(mCurrentProfile)
+    }
+
+    fun initLoader() {
+        //  Инициализация лоадера для загрузки картинок в хедер
+        DrawerImageLoader.init(object : AbstractDrawerImageLoader() {
+            override fun set(imageView: ImageView, uri: Uri, placeholder: Drawable) {
+                imageView.downloadAndSetImage(uri.toString())
+            }
+        })
     }
 
 }
