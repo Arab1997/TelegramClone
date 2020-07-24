@@ -1,8 +1,6 @@
 package myway.telegram.ui.fragments
 
-import android.widget.EditText
 import androidx.fragment.app.Fragment
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.android.synthetic.main.fragment_enter_code.*
 import myway.telegram.MainActivity
@@ -37,7 +35,7 @@ class EnterCodeFragment(val phoneNumber: String, val id: String) :
                 dateMap[CHILD_PHONE] = phoneNumber
                 dateMap[CHILD_USERNAME] = uid
 
-                REF_DB_ROOT.child(NODE_USERS).child(uid).updateChildren(dateMap)
+                REF_DATABASE_ROOT.child(NODE_USERS).child(uid).updateChildren(dateMap)
                     .addOnCompleteListener { task2 ->
                         if (task2.isSuccessful) {
                             showToast("Добро пожаловать")
