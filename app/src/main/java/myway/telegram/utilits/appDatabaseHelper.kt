@@ -9,6 +9,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import myway.telegram.models.CommonModel
 import myway.telegram.models.User
+import java.util.ArrayList
 
 lateinit var AUTH: FirebaseAuth
 lateinit var USER: User
@@ -106,5 +107,20 @@ fun initContacts() {
             }
         }
         cursor?.close()
+        updatePhonesToDB(arrayContacts)
     }
+}
+
+fun updatePhonesToDB(arrayContacts: ArrayList<CommonModel>) {
+    REF_DATABASE_ROOT.child(NODE_PHONES).addListenerForSingleValueEvent(AppValueEventListener{
+        it.children.forEach { snapshot ->
+            arrayContacts.forEach { contact ->
+                if (snapshot.key ==contact.phone){
+                    REF_DATABASE_ROOT.child(NODE_PHONES_CONTACTS).child(CURRENT_UID).child(snapshot.value.toString()).child(
+                        CHILD_ID).setValue(snapshot.value.toString())
+                        .addOnFailureListener { showToast(it.message.toString()) }
+                }
+            }
+        }
+    })
 }
