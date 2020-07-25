@@ -18,7 +18,9 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader
 import com.mikepenz.materialdrawer.util.DrawerImageLoader
 import myway.telegram.R
+import myway.telegram.ui.fragments.ContactsFragment
 import myway.telegram.ui.fragments.SettingsFragment
+import myway.telegram.utilits.APP_ACTIVITY
 import myway.telegram.utilits.USER
 import myway.telegram.utilits.downloadAndSetImage
 import myway.telegram.utilits.replaceFragment
@@ -26,7 +28,7 @@ import myway.telegram.utilits.replaceFragment
 
 /* Обьект реализующий боковое меню Navigation Drawer */
 
-class AppDrawer(val mainActivity: AppCompatActivity, val toolbar: Toolbar) {
+class AppDrawer {
     //class AppDrawer  {
     private lateinit var mCurrentProfile: ProfileDrawerItem
     private lateinit var mDrawer: Drawer
@@ -45,24 +47,21 @@ class AppDrawer(val mainActivity: AppCompatActivity, val toolbar: Toolbar) {
     fun disableDrawer() {
         /* Отключение выдвигающего меню */
         mDrawer.actionBarDrawerToggle?.isDrawerIndicatorEnabled = false
-        mainActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        APP_ACTIVITY.supportActionBar?.setDisplayHomeAsUpEnabled(true)
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-        /*mainActivity.mToolbar.setNavigationOnClickListener {
-            mainActivity.supportFragmentManager.popBackStack()
-        }*/
 
-        toolbar.setNavigationOnClickListener {
-            mainActivity.supportFragmentManager.popBackStack()
+        APP_ACTIVITY.mToolbar.setNavigationOnClickListener {
+            APP_ACTIVITY.supportFragmentManager.popBackStack()
         }
     }
 
 
     fun enableDrawer() {
         /* Включение выдвигающего меню */
-        mainActivity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        APP_ACTIVITY.supportActionBar?.setDisplayHomeAsUpEnabled(false)
         mDrawer.actionBarDrawerToggle?.isDrawerIndicatorEnabled = true
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-        toolbar.setNavigationOnClickListener {
+        APP_ACTIVITY.mToolbar.setNavigationOnClickListener {
             mDrawer.openDrawer()
         }
 
@@ -70,7 +69,7 @@ class AppDrawer(val mainActivity: AppCompatActivity, val toolbar: Toolbar) {
              mDrawer.openDrawer()
          }*/
 
-        toolbar.setNavigationOnClickListener {
+        APP_ACTIVITY.mToolbar.setNavigationOnClickListener {
             mDrawer.openDrawer()
         }
     }
@@ -78,8 +77,8 @@ class AppDrawer(val mainActivity: AppCompatActivity, val toolbar: Toolbar) {
     private fun creteDrawer() {
         /* Отключение выдвигающего меню */
         mDrawer = DrawerBuilder()
-            .withActivity(mainActivity)
-            .withToolbar(toolbar)
+            .withActivity(APP_ACTIVITY)
+            .withToolbar(APP_ACTIVITY.mToolbar)
             .withActionBarDrawerToggle(true)
             .withSelectedItem(-1)
             .withAccountHeader(mHeader)
@@ -137,43 +136,19 @@ class AppDrawer(val mainActivity: AppCompatActivity, val toolbar: Toolbar) {
                     position: Int,
                     drawerItem: IDrawerItem<*>
                 ): Boolean {
-                    when (position) {
-                        7 ->
-                            mainActivity.replaceFragment(SettingsFragment())    // begin with settingFragments
-                    }
+                    clickToItem(position)
                     return false
                 }
             }).build()
-
     }
 
-    /*  private fun clickToItem(position:Int){
+
+      private fun clickToItem(position:Int){
           when (position) {
-              7 -> replaceFragment(SettingsFragment())
-              4 -> replaceFragment(ContactsFragment())
+              7 -> APP_ACTIVITY.replaceFragment(SettingsFragment())
+              4 -> APP_ACTIVITY.replaceFragment(ContactsFragment())
           }
       }
-
-
-      fun updateHeader(){
-          *//* Обновления хедера *//*
-        mCurrentProfile
-            .withName(USER.fullname)
-            .withEmail(USER.phone)
-            .withIcon(USER.photoUrl)
-
-        mHeader.updateProfile(mCurrentProfile)
-
-    }*/
-
-    /*private fun initLoader(){
-        *//* Инициализация лоадера для загрузки картинок в хедер *//*
-        DrawerImageLoader.init(object : AbstractDrawerImageLoader(){
-            override fun set(imageView: ImageView, uri: Uri, placeholder: Drawable) {
-                imageView.downloadAndSetImage(uri.toString())
-            }
-        })
-    }*/
 
     private fun createHeader() {
         mCurrentProfile = ProfileDrawerItem()
@@ -183,7 +158,7 @@ class AppDrawer(val mainActivity: AppCompatActivity, val toolbar: Toolbar) {
             .withIdentifier(200)
         /* Создание хедера*/
         mHeader = AccountHeaderBuilder()
-            .withActivity(mainActivity)
+            .withActivity(APP_ACTIVITY)
             .withHeaderBackground(R.drawable.header)
             .addProfiles(
                 mCurrentProfile

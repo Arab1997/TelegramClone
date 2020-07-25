@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
     private fun initFields() {
         /* Функция инициализирует переменные */
         mToolbar = mBinding.mainToolbar
-        mAppDrawer = AppDrawer(this, mToolbar)
+        mAppDrawer = AppDrawer()
 
     }
 
