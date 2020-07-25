@@ -9,6 +9,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
+import com.google.android.gms.common.internal.service.Common
+import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.contact_item.view.*
@@ -18,13 +20,13 @@ import myway.telegram.models.CommonModel
 import myway.telegram.utilits.*
 
 
-class ContactsFragment: BaseFragment(R.layout.fragment_contacts) {
+class ContactsFragment : BaseFragment(R.layout.fragment_contacts) {
 
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mAdapter: FirebaseRecyclerAdapter<CommonModel, ContactsHolder>
     private lateinit var mRefContacts: DatabaseReference
     private lateinit var mRefUsers: DatabaseReference
-    private lateinit var mRefUsersListener: AppValueEventListener
+    private lateinit var mRefUsersListener:AppValueEventListener
     private  var mapListeners = hashMapOf<DatabaseReference,AppValueEventListener>()
 
     override fun onResume() {
@@ -60,11 +62,9 @@ class ContactsFragment: BaseFragment(R.layout.fragment_contacts) {
                 position: Int,
                 model: CommonModel
             ) {
-                mRefUsers = REF_DATABASE_ROOT.child(
-                    NODE_USERS
-                ).child(model.id)
+                mRefUsers = REF_DATABASE_ROOT.child(NODE_USERS).child(model.id)
 
-               /* mRefUsersListener = AppValueEventListener {
+                mRefUsersListener = AppValueEventListener {
                     val contact = it.getCommonModel()
 
                     if (contact.fullname.isEmpty()){
@@ -73,12 +73,12 @@ class ContactsFragment: BaseFragment(R.layout.fragment_contacts) {
 
                     holder.status.text = contact.state
                     holder.photo.downloadAndSetImage(contact.photoUrl)
-                    holder.itemView.setOnClickListener { replaceFragment(
+                  /*  holder.itemView.setOnClickListener { replaceFragment(
                         SingleChatFragment(
                             model
                         )
-                    ) }
-                }*/
+                    ) }*/
+                }
 
                 mRefUsers.addValueEventListener(mRefUsersListener)
                 mapListeners[mRefUsers] = mRefUsersListener
@@ -92,7 +92,7 @@ class ContactsFragment: BaseFragment(R.layout.fragment_contacts) {
 
     // Холдер для захвата ViewGroup
     class ContactsHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val name: TextView = view.contact_fullname1
+        val name: TextView = view.contact_fullname
         val status: TextView = view.contact_status
         val photo: CircleImageView = view.contact_photo
     }
