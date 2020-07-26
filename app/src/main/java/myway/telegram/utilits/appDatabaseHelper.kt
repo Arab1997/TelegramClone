@@ -6,6 +6,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ServerValue
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import myway.telegram.models.CommonModel
@@ -118,3 +119,25 @@ fun updatePhonesToDB(arrayContacts: ArrayList<CommonModel>) {
 
 fun DataSnapshot.getUserModel(): UserModel =
     this.getValue(UserModel::class.java)?: UserModel()
+
+
+fun sendMessage(message: String, receivingUserID: String, typeText: String, function: () -> Unit) {
+
+    val refDialogUser = "$NODE_MESSAGES/$CURRENT_UID/$receivingUserID"
+    val refDialogReceivingUser = "$NODE_MESSAGES/$receivingUserID/$CURRENT_UID"
+    val messageKey = REF_DATABASE_ROOT.child(refDialogUser).push().key
+
+    val mapMessage = hashMapOf<String, Any>()
+    mapMessage[CHILD_FROM] = CURRENT_UID
+    mapMessage[CHILD_TYPE] = typeText
+    mapMessage[CHILD_TEXT] = message
+    mapMessage[CHILD_TIMESTAMP] = ServerValue.TIMESTAMP
+
+    val mapDialog = hashMapOf<String, Any>()
+    mapDialog["$refDialogUser/$messageKey"] =mapMessage
+    mapDialog["$refDialogReceivingUser/$messageKey"] =mapMessage
+
+    REF_DATABASE_ROOT.updateChildren(mapDialog)
+        .addOnSuccessListener { function() }
+        .addOnFailureListener { showToast(it.message.toString()) }
+}
