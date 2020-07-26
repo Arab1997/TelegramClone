@@ -64,7 +64,7 @@ class ContactsFragment : BaseFragment(R.layout.fragment_contacts) {
             ) {
                 mRefUsers = REF_DATABASE_ROOT.child(NODE_USERS).child(model.id)
 
-                mRefUsersListener = AppValueEventListener {
+                mRefUsersListener = AppValueEventListener { // Здесь был утечка памяти
                     val contact = it.getCommonModel()
 
                     if (contact.fullname.isEmpty()){
@@ -100,6 +100,8 @@ class ContactsFragment : BaseFragment(R.layout.fragment_contacts) {
     override fun onPause() {
         super.onPause()
         mAdapter.stopListening()
+
+        // Устранили утечки памяти
         println()
         mapListeners.forEach {
             it.key.removeEventListener(it.value)
