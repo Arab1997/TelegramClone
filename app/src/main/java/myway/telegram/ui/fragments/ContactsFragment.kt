@@ -1,7 +1,5 @@
 package myway.telegram.ui.fragments
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +7,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
-import com.google.android.gms.common.internal.service.Common
-import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.contact_item.view.*
@@ -73,11 +69,10 @@ class ContactsFragment : BaseFragment(R.layout.fragment_contacts) {
 
                     holder.status.text = contact.state
                     holder.photo.downloadAndSetImage(contact.photoUrl)
-                  /*  holder.itemView.setOnClickListener { replaceFragment(
-                        SingleChatFragment(
-                            model
-                        )
-                    ) }*/
+                    holder.itemView.setOnClickListener { replaceFragment(
+                       SingleChatFragment(model)
+
+                    ) }
                 }
 
                 mRefUsers.addValueEventListener(mRefUsersListener)
