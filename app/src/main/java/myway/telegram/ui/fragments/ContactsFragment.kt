@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.contact_item.view.*
 import kotlinx.android.synthetic.main.fragment_contacts.*
 import myway.telegram.R
 import myway.telegram.models.CommonModel
+import myway.telegram.ui.fragments.single_chat.SingleChatFragment
 import myway.telegram.utilits.*
 
 
@@ -70,7 +71,9 @@ class ContactsFragment : BaseFragment(R.layout.fragment_contacts) {
                     holder.status.text = contact.state
                     holder.photo.downloadAndSetImage(contact.photoUrl)
                     holder.itemView.setOnClickListener { replaceFragment(
-                       SingleChatFragment(model)
+                        SingleChatFragment(
+                            model
+                        )
 
                     ) }
                 }
