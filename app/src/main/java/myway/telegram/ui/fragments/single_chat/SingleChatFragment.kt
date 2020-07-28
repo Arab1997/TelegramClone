@@ -1,7 +1,11 @@
 package myway.telegram.ui.fragments.single_chat
 
 import android.view.View
+import android.widget.AbsListView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -27,16 +31,15 @@ class SingleChatFragment(private val contact: CommonModel) :
     private lateinit var mRefMessages: DatabaseReference
     private lateinit var mAdapter: SingleChatAdapter
     private lateinit var mRecyclerView: RecyclerView
-    private lateinit var mMessagesListener: ChildEventListener
-    private var mListMessages = mutableListOf<CommonModel>()
-
-/*    private var mCountMessages = 10
+    private lateinit var mMessagesListener: AppChildEventListener
+    private var mCountMessages = 10
     private var mIsScrolling = false
     private var mSmoothScrollToPosition = true
+    private var mListListeners = mutableListOf<AppChildEventListener>()
     private lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
     private lateinit var mLayoutManager: LinearLayoutManager
-    private lateinit var mAppVoiceRecorder: AppVoiceRecorder
-    private lateinit var mBottomSheetBehavior: BottomSheetBehavior<*>*/
+  //  private lateinit var mAppVoiceRecorder: AppVoiceRecorder
+    private lateinit var mBottomSheetBehavior: BottomSheetBehavior<*>
 
     override fun onResume() {
         super.onResume()
@@ -57,18 +60,21 @@ class SingleChatFragment(private val contact: CommonModel) :
         mRecyclerView.layoutManager = mLayoutManager*/
         mMessagesListener = AppChildEventListener{
             mAdapter.addItem(it.getCommonModel())
-            mRecyclerView.smoothScrollToPosition(mAdapter.itemCount) // skrulid na posleddniy element
+            if (mSmoothScrollToPosition){
+                mRecyclerView.smoothScrollToPosition(mAdapter.itemCount) // skrulid na posleddniy element
+            }
         }
 
-        mRefMessages.addChildEventListener(mMessagesListener)
-        //   mRefMessages.limitToLast(mCountMessages).addChildEventListener(mMessagesListener)
+        mRefMessages.limitToLast(mCountMessages).addChildEventListener(mMessagesListener)
+        mListListeners.add(mMessagesListener)
 
-        /*    mRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            mRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
                     println(mRecyclerView.recycledViewPool.getRecycledViewCount(0))
-                    if (mIsScrolling && dy < 0 && mLayoutManager.findFirstVisibleItemPosition() <= 3) {
+                   // if (mIsScrolling && dy < 0 && mLayoutManager.findFirstVisibleItemPosition() <= 3) {
+                    if (mIsScrolling && dy < 0 ) {
                         updateData()
                     }
                 }
@@ -79,19 +85,20 @@ class SingleChatFragment(private val contact: CommonModel) :
                         mIsScrolling = true
                     }
                 }
-            })*/
+            })
 
 
         //        mSwipeRefreshLayout.setOnRefreshListener { updateData() }
     }
 
-    /* private fun updateData() {
+     private fun updateData() {
          mSmoothScrollToPosition = false
          mIsScrolling = false
          mCountMessages += 10
          mRefMessages.removeEventListener(mMessagesListener)
-       //  mRefMessages.limitToLast(mCountMessages).addChildEventListener(mMessagesListener)
-     }*/
+         mRefMessages.limitToLast(mCountMessages).addChildEventListener(mMessagesListener)
+         mListListeners.add(mMessagesListener)
+     }
 
     private fun initToolbar() {
         mToolbarInfo = APP_ACTIVITY.mToolbar.toolbar_info
@@ -106,6 +113,7 @@ class SingleChatFragment(private val contact: CommonModel) :
         mRefUser.addValueEventListener(mListenerInfoToolbar)
 
         chat_btn_send_message.setOnClickListener {
+            mSmoothScrollToPosition = true
             val message = chat_input_message.text.toString()
             if (message.isEmpty()) {
                 showToast("Введите сообщение")
@@ -133,7 +141,11 @@ class SingleChatFragment(private val contact: CommonModel) :
         mToolbarInfo.visibility = View.GONE
         //Утечки памяты
         mRefUser.removeEventListener(mListenerInfoToolbar)
-        mRefMessages.removeEventListener(mMessagesListener)
+
+        mListListeners.forEach {
+            mRefMessages.removeEventListener(it)
+        }
+        println()
     }
 
 }
