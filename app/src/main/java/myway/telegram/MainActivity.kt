@@ -8,9 +8,12 @@ import androidx.core.content.ContextCompat
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import myway.telegram.activities.RegisterActivity
+import myway.telegram.database.AUTH
+import myway.telegram.database.initFirebase
+import myway.telegram.database.initUser
 import myway.telegram.databinding.ActivityMainBinding
-import myway.telegram.ui.fragments.ChatsFragment
+import myway.telegram.ui.fragments.MainFragment
+import myway.telegram.ui.fragments.register.EnterPhoneNumberFragment
 import myway.telegram.ui.objects.AppDrawer
 import myway.telegram.utilits.*
 
@@ -27,7 +30,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(mBinding.root)
         APP_ACTIVITY = this
         initFirebase()
-       // initContacts()
         initUser {
             //CoroutineScope
             CoroutineScope(Dispatchers.IO).launch {
@@ -41,12 +43,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun initFunc() {
         /* Функция инициализирует функциональность приложения */
+        setSupportActionBar(mToolbar)
         if (AUTH.currentUser != null) {  //если user автвризован
-            setSupportActionBar(mToolbar)
             mAppDrawer.create()
-            replaceFragment(ChatsFragment(), false)
+            replaceFragment(MainFragment(), false)
         } else {
-            replaceActivity(RegisterActivity())
+            replaceFragment(EnterPhoneNumberFragment(), false)
         }
     }
 
@@ -79,10 +81,9 @@ class MainActivity : AppCompatActivity() {
                 READ_CONTACTS
             ) == PackageManager.PERMISSION_GRANTED
         ) {
-          //  initContacts()
+            //  initContacts()
         }
     }
-
 
 
 }

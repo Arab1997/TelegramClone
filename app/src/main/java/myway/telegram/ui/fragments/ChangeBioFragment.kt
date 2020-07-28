@@ -2,6 +2,7 @@ package myway.telegram.ui.fragments
 
 import kotlinx.android.synthetic.main.fragment_change_bio.*
 import myway.telegram.R
+import myway.telegram.database.*
 import myway.telegram.utilits.*
 
 
@@ -15,17 +16,7 @@ class ChangeBioFragment : BaseChangeFragment(R.layout.fragment_change_bio) {
     override fun change() {
         super.change()
         val newBio = settings_input_bio.text.toString()
-        REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).child(CHILD_BIO).setValue(newBio)
-            .addOnCompleteListener {
-                if (it.isSuccessful) {
-                    showToast(getString(R.string.toast_data_update))
-                    USER.bio = newBio
-                    fragmentManager?.popBackStack()
-                }
-            }
-       // setBioToDatabase(newBio)
+        setBioToDatabase(newBio)
     }
-
-
 }
 

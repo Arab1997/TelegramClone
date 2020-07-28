@@ -1,5 +1,7 @@
 package myway.telegram.utilits
 
+import myway.telegram.database.*
+
 enum class AppStates(val state:String) {
     /* Класс перечисление состояний приложения*/
     ONLINE("в сети"),

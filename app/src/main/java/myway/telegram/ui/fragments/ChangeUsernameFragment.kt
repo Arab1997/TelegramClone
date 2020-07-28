@@ -2,6 +2,7 @@ package myway.telegram.ui.fragments
 
 import kotlinx.android.synthetic.main.fragment_change_username.*
 import myway.telegram.R
+import myway.telegram.database.*
 import myway.telegram.utilits.*
 import java.util.*
 
@@ -12,7 +13,6 @@ class ChangeUsernameFragment : BaseChangeFragment(R.layout.fragment_change_usern
         super.onResume()
         settings_input_username.setText(USER.username)
     }
-
 
 
     override fun change() {
@@ -35,40 +35,14 @@ class ChangeUsernameFragment : BaseChangeFragment(R.layout.fragment_change_usern
 
     private fun changeUsername() {
         /* Изменение username в базе данных */
-        REF_DATABASE_ROOT.child(NODE_USERNAMES).child(mNewUsername).setValue(CURRENT_UID)
-            .addOnCompleteListener {
-                if (it.isSuccessful) {
-                    updateCurrentUsername()
-                }
+        REF_DATABASE_ROOT.child(NODE_USERNAMES).child(mNewUsername).setValue(
+            CURRENT_UID
+        ).addOnCompleteListener {
+            if (it.isSuccessful) {
+                updateCurrentUsername(mNewUsername)
             }
+        }
     }
-
-    private fun updateCurrentUsername() {
-        /* Обновление username в базе данных у текущего пользователя */
-        REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).child(CHILD_USERNAME).setValue(mNewUsername)
-            .addOnCompleteListener {
-                if (it.isSuccessful) {
-                    showToast(getString(
-                            R.string.toast_data_update
-                        )
-                    )
-                    deleteOldUsername()
-                } else {
-                    showToast(it.exception?.message.toString())
-                }
-            }
-    }
-
-    private fun deleteOldUsername() {
-        /* Удаление старого username из базы данных  */
-        REF_DATABASE_ROOT.child(NODE_USERNAMES).child(USER.username).removeValue()
-            .addOnSuccessListener {
-                showToast(getString(R.string.toast_data_update))
-                fragmentManager?.popBackStack()
-                USER.username = mNewUsername
-            }.addOnFailureListener { showToast(it.message.toString()) }
-    }
-
 
 
 }

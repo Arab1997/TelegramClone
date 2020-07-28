@@ -5,17 +5,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.message_item.view.*
 import myway.telegram.R
 import myway.telegram.models.CommonModel
-import myway.telegram.utilits.CURRENT_UID
+import myway.telegram.database.CURRENT_UID
+import myway.telegram.utilits.DiffUtilCalback
 import myway.telegram.utilits.asTime
-import java.text.SimpleDateFormat
 import java.util.*
 
 class SingleChatAdapter : RecyclerView.Adapter<SingleChatAdapter.SingleChatHolder>() {
     private var mListMessagesCache = emptyList<CommonModel>()
+    private lateinit var mDiffResult:DiffUtil.DiffResult
+
     // private var mListMessagesCache = mutableListOf<MessageView>()
     // private var mListHolders = mutableListOf<MessageHolder>()
 
@@ -55,10 +58,19 @@ class SingleChatAdapter : RecyclerView.Adapter<SingleChatAdapter.SingleChatHolde
     }
 
     fun setList(list: List<CommonModel>) {
-        mListMessagesCache = list
-        notifyDataSetChanged()
+
+
+        //notifyDataSetChanged()
     }
 
+    fun addItem(item:CommonModel){
+        val newList = mutableListOf<CommonModel>()
+        newList.addAll(mListMessagesCache)
+        newList.add(item)
+        mDiffResult = DiffUtil.calculateDiff(DiffUtilCalback(mListMessagesCache, newList))
+        mDiffResult.dispatchUpdatesTo(this)
+        mListMessagesCache = newList
+    }
 
     /*   override fun getItemViewType(position: Int): Int {
            return mListMessagesCache[position].getTypeView()

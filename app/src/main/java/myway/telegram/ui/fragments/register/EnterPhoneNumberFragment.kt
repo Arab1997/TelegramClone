@@ -1,18 +1,13 @@
-package myway.telegram.ui.fragments
+package myway.telegram.ui.fragments.register
 
 import androidx.fragment.app.Fragment
 import com.google.firebase.FirebaseException
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.android.synthetic.main.fragment_enter_phone_number.*
-import myway.telegram.MainActivity
 import myway.telegram.R
-import myway.telegram.activities.RegisterActivity
-import myway.telegram.utilits.AUTH
-import myway.telegram.utilits.replaceActivity
-import myway.telegram.utilits.replaceFragment
-import myway.telegram.utilits.showToast
+import myway.telegram.database.AUTH
+import myway.telegram.utilits.*
 import java.util.concurrent.TimeUnit
 
 
@@ -29,7 +24,7 @@ class EnterPhoneNumberFragment : Fragment(R.layout.fragment_enter_phone_number) 
                     if (task.isSuccessful)
                     {
                         showToast("Добро пожаловать")
-                        (activity as RegisterActivity).replaceActivity(MainActivity())
+                        restartActivity()
                     }else showToast(task.exception?.message.toString())
                 }
             }
@@ -39,7 +34,12 @@ class EnterPhoneNumberFragment : Fragment(R.layout.fragment_enter_phone_number) 
 
 
             override fun onCodeSent(id: String, token: PhoneAuthProvider.ForceResendingToken) {
-                replaceFragment(EnterCodeFragment(mPhoneNumber,id))
+                replaceFragment(
+                    EnterCodeFragment(
+                        mPhoneNumber,
+                        id
+                    )
+                )
 
             }
         }
@@ -61,7 +61,7 @@ class EnterPhoneNumberFragment : Fragment(R.layout.fragment_enter_phone_number) 
     private fun authUser() {
         mPhoneNumber = register_input_phone_number.text.toString()
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
-            mPhoneNumber, 60, TimeUnit.SECONDS, activity as RegisterActivity, mCallback
+            mPhoneNumber, 60, TimeUnit.SECONDS, APP_ACTIVITY, mCallback
         )
 
     }
