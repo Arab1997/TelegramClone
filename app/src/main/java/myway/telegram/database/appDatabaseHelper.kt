@@ -13,6 +13,7 @@ import myway.telegram.models.CommonModel
 import myway.telegram.models.UserModel
 import myway.telegram.utilits.APP_ACTIVITY
 import myway.telegram.utilits.AppValueEventListener
+import myway.telegram.utilits.TYPE_MESSAGE_IMAGE
 import myway.telegram.utilits.showToast
 import java.util.ArrayList
 
@@ -30,6 +31,7 @@ const val NODE_USERNAMES = "usernames"
 const val NODE_PHONES = "phones"
 const val NODE_PHONES_CONTACTS = "phones_contacts"
 const val FOLDER_PROFILE_IMAGE = "profile_image"
+const val FOLDER_MESSAGE_IMAGE = "message_image"
 
 
 const val CHILD_ID = "id"
@@ -43,6 +45,7 @@ const val CHILD_TEXT = "text"
 const val CHILD_TYPE = "type"
 const val CHILD_FROM = "from"
 const val CHILD_TIMESTAMP = "timeStamp"
+const val CHILD_IMAGE_URL = "imageUrl"
 
 
 fun initFirebase() {
@@ -218,4 +221,24 @@ fun setNameToDatabase(fullname: String) {
             APP_ACTIVITY.mAppDrawer.updateHeader()
             APP_ACTIVITY.supportFragmentManager.popBackStack()
         }.addOnFailureListener { showToast(it.message.toString()) }
+}
+
+ fun sendMessageAsImage(receivingUserID: String, imageUrl: String, messageKey: String) {
+     val refDialogUser = "$NODE_MESSAGES/$CURRENT_UID/$receivingUserID"
+     val refDialogReceivingUser = "$NODE_MESSAGES/$receivingUserID/$CURRENT_UID"
+
+     val mapMessage = hashMapOf<String, Any>()
+     mapMessage[CHILD_FROM] = CURRENT_UID
+     mapMessage[CHILD_TYPE] = TYPE_MESSAGE_IMAGE
+     mapMessage[CHILD_ID] = messageKey
+     mapMessage[CHILD_TIMESTAMP] = ServerValue.TIMESTAMP
+     mapMessage[CHILD_IMAGE_URL] = imageUrl
+
+     val mapDialog = hashMapOf<String, Any>()
+     mapDialog["$refDialogUser/$messageKey"] = mapMessage
+     mapDialog["$refDialogReceivingUser/$messageKey"] = mapMessage
+
+     REF_DATABASE_ROOT
+         .updateChildren(mapDialog)
+         .addOnFailureListener { showToast(it.message.toString()) }
 }

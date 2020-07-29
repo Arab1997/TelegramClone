@@ -61,8 +61,6 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         }
         return true
     }
-
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         /* Активность которая запускается для получения картинки для фото пользователя */
         super.onActivityResult(requestCode, resultCode, data)
@@ -92,6 +90,4 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
             }
         }
     }
-
-
 }
