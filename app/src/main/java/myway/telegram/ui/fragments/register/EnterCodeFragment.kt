@@ -10,21 +10,21 @@ import myway.telegram.utilits.*
 class EnterCodeFragment(val phoneNumber: String, val id: String) :
     Fragment(R.layout.fragment_enter_code) {
 
+
     override fun onStart() {
         super.onStart()
         APP_ACTIVITY.title = phoneNumber
         register_input_code.addTextChangedListener(AppTextWatcher {
-
-            val string: String = register_input_code.text.toString()
+            val string = register_input_code.text.toString()
             if (string.length == 6) {
                 enterCode()
             }
-
         })
     }
 
     private fun enterCode() {
-        val code: String = register_input_code.text.toString()
+        /* Функция проверяет код, если все нормально, производит создания информации о пользователе в базе данных.*/
+        val code = register_input_code.text.toString()
         val credential = PhoneAuthProvider.getCredential(id, code)
         AUTH.signInWithCredential(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
@@ -33,7 +33,6 @@ class EnterCodeFragment(val phoneNumber: String, val id: String) :
                 dateMap[CHILD_ID] = uid
                 dateMap[CHILD_PHONE] = phoneNumber
                 dateMap[CHILD_USERNAME] = uid
-
 
                 REF_DATABASE_ROOT.child(
                     NODE_PHONES

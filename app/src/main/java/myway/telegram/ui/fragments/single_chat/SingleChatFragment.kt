@@ -35,16 +35,19 @@ class SingleChatFragment(private val contact: CommonModel) :
     private var mCountMessages = 10
     private var mIsScrolling = false
     private var mSmoothScrollToPosition = true
-    private var mListListeners = mutableListOf<AppChildEventListener>()
     private lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
     private lateinit var mLayoutManager: LinearLayoutManager
-  //  private lateinit var mAppVoiceRecorder: AppVoiceRecorder
-    private lateinit var mBottomSheetBehavior: BottomSheetBehavior<*>
 
     override fun onResume() {
         super.onResume()
+        initFields()
         initToolbar()
         initRecycleView()
+    }
+
+    private fun initFields() {
+        mSwipeRefreshLayout = chat_swipe_refresh
+        mLayoutManager = LinearLayoutManager(this.context)
     }
 
     private fun initRecycleView() {
@@ -55,50 +58,54 @@ class SingleChatFragment(private val contact: CommonModel) :
             .child(CURRENT_UID)
             .child(contact.id)
         mRecyclerView.adapter = mAdapter
-        /*mRecyclerView.setHasFixedSize(true)
+        mRecyclerView.setHasFixedSize(true)
         mRecyclerView.isNestedScrollingEnabled = false
-        mRecyclerView.layoutManager = mLayoutManager*/
-        mMessagesListener = AppChildEventListener{
-            mAdapter.addItem(it.getCommonModel())
-            if (mSmoothScrollToPosition){
-                mRecyclerView.smoothScrollToPosition(mAdapter.itemCount) // skrulid na posleddniy element
+        mRecyclerView.layoutManager = mLayoutManager
+        mMessagesListener = AppChildEventListener {
+            val message = it.getCommonModel()
+
+            if (mSmoothScrollToPosition) {
+                mAdapter.addItemToBottom(message) {
+                    mRecyclerView.smoothScrollToPosition(mAdapter.itemCount)
+                }
+            } else {
+                mAdapter.addItemToTop(message) {
+                    mSwipeRefreshLayout.isRefreshing = false
+                }
             }
+
         }
-
         mRefMessages.limitToLast(mCountMessages).addChildEventListener(mMessagesListener)
-        mListListeners.add(mMessagesListener)
 
-            mRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        mRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-                    println(mRecyclerView.recycledViewPool.getRecycledViewCount(0))
-                   // if (mIsScrolling && dy < 0 && mLayoutManager.findFirstVisibleItemPosition() <= 3) {
-                    if (mIsScrolling && dy < 0 ) {
-                        updateData()
-                    }
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                println(mRecyclerView.recycledViewPool.getRecycledViewCount(0))
+                if (mIsScrolling && dy < 0 && mLayoutManager.findFirstVisibleItemPosition() <= 3) {
+                    updateData()
                 }
+            }
 
-                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                    super.onScrollStateChanged(recyclerView, newState)
-                    if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
-                        mIsScrolling = true
-                    }
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                    mIsScrolling = true
                 }
-            })
+            }
+        })
 
 
-        //        mSwipeRefreshLayout.setOnRefreshListener { updateData() }
+        mSwipeRefreshLayout.setOnRefreshListener { updateData() }
     }
 
-     private fun updateData() {
-         mSmoothScrollToPosition = false
-         mIsScrolling = false
-         mCountMessages += 10
-         mRefMessages.removeEventListener(mMessagesListener)
-         mRefMessages.limitToLast(mCountMessages).addChildEventListener(mMessagesListener)
-         mListListeners.add(mMessagesListener)
-     }
+    private fun updateData() {
+        mSmoothScrollToPosition = false
+        mIsScrolling = false
+        mCountMessages += 10
+        mRefMessages.removeEventListener(mMessagesListener)
+        mRefMessages.limitToLast(mCountMessages).addChildEventListener(mMessagesListener)
+    }
 
     private fun initToolbar() {
         mToolbarInfo = APP_ACTIVITY.mToolbar.toolbar_info
@@ -107,16 +114,17 @@ class SingleChatFragment(private val contact: CommonModel) :
             mReceivingUser = it.getUserModel()
             initInfoToolbar()
         }
-        mRefUser = REF_DATABASE_ROOT
-            .child(NODE_USERS)
-            .child(contact.id)
+
+        mRefUser = REF_DATABASE_ROOT.child(
+            NODE_USERS
+        ).child(contact.id)
         mRefUser.addValueEventListener(mListenerInfoToolbar)
 
         chat_btn_send_message.setOnClickListener {
             mSmoothScrollToPosition = true
             val message = chat_input_message.text.toString()
             if (message.isEmpty()) {
-                showToast("Введите сообщение")
+                showToast("ВВедите сообщение")
             } else sendMessage(
                 message,
                 contact.id,
@@ -132,6 +140,7 @@ class SingleChatFragment(private val contact: CommonModel) :
         if (mReceivingUser.fullname.isEmpty()) {
             mToolbarInfo.toolbar_chat_fullname.text = contact.fullname
         } else mToolbarInfo.toolbar_chat_fullname.text = mReceivingUser.fullname
+
         mToolbarInfo.toolbar_chat_image.downloadAndSetImage(mReceivingUser.photoUrl)
         mToolbarInfo.toolbar_chat_status.text = mReceivingUser.state
     }
@@ -139,13 +148,7 @@ class SingleChatFragment(private val contact: CommonModel) :
     override fun onPause() {
         super.onPause()
         mToolbarInfo.visibility = View.GONE
-        //Утечки памяты
         mRefUser.removeEventListener(mListenerInfoToolbar)
-
-        mListListeners.forEach {
-            mRefMessages.removeEventListener(it)
-        }
-        println()
+        mRefMessages.removeEventListener(mMessagesListener)
     }
-
 }
