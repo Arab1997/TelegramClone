@@ -60,7 +60,7 @@
         app:layout_constraintEnd_toEndOf="@+id/chat_input_message"
         app:layout_constraintTop_toTopOf="@+id/chat_input_message" />
 
-<!--    <ImageView
+    <ImageView
         android:id="@+id/chat_btn_voice"
         android:layout_width="50dp"
         android:layout_height="0dp"
@@ -69,6 +69,6 @@
         android:src="@drawable/ic_voice"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/chat_input_message" />-->
+        app:layout_constraintTop_toTopOf="@+id/chat_input_message" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
