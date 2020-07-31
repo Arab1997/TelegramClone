@@ -73,7 +73,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
                 FOLDER_PROFILE_IMAGE
             )
                 .child(CURRENT_UID)
-            putImageToStorage(
+            putFileToStorage(
                 uri,
                 path
             ) {        //lyamda funciotn
