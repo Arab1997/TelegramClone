@@ -2,6 +2,7 @@ package myway.telegram.ui.fragments.message_recycler_view.views
 
 import myway.telegram.models.CommonModel
 import myway.telegram.utilits.TYPE_MESSAGE_IMAGE
+import myway.telegram.utilits.TYPE_MESSAGE_VOICE
 
 class AppViewFactory {
     companion object{
@@ -13,6 +14,13 @@ class AppViewFactory {
                     message.timeStamp.toString(),
                     message.fileUrl
                 )
+                TYPE_MESSAGE_VOICE->ViewVoiceMessage(
+                    message.id,
+                    message.from,
+                    message.timeStamp.toString(),
+                    message.fileUrl
+                )
+
                 else -> ViewTextMessage(
                     message.id,
                     message.from,
