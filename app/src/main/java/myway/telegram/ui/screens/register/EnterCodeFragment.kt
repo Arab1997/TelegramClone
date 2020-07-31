@@ -1,4 +1,4 @@
-package myway.telegram.ui.fragments.register
+package myway.telegram.ui.screens.register
 
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.PhoneAuthProvider

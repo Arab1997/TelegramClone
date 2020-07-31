@@ -1,4 +1,4 @@
-package myway.telegram.ui.fragments
+package myway.telegram.ui.screens
 
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.fragment_contacts.*
 import myway.telegram.R
 import myway.telegram.database.*
 import myway.telegram.models.CommonModel
-import myway.telegram.ui.fragments.single_chat.SingleChatFragment
+import myway.telegram.ui.screens.single_chat.SingleChatFragment
 import myway.telegram.utilits.*
 
 

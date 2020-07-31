@@ -1,4 +1,4 @@
-package myway.telegram.ui.fragments
+package myway.telegram.ui.screens
 
 import kotlinx.android.synthetic.main.fragment_change_name.*
 import myway.telegram.R

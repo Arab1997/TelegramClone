@@ -1,4 +1,4 @@
-package myway.telegram.ui.fragments
+package myway.telegram.ui.screens
 
 import androidx.fragment.app.Fragment
 import myway.telegram.R

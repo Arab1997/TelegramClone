@@ -1,4 +1,4 @@
-package myway.telegram.ui.fragments.single_chat
+package myway.telegram.ui.screens.single_chat
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -23,8 +23,8 @@ import myway.telegram.R
 import myway.telegram.database.*
 import myway.telegram.models.CommonModel
 import myway.telegram.models.UserModel
-import myway.telegram.ui.fragments.BaseFragment
-import myway.telegram.ui.fragments.message_recycler_view.views.AppViewFactory
+import myway.telegram.ui.screens.BaseFragment
+import myway.telegram.ui.screens.message_recycler_view.views.AppViewFactory
 import myway.telegram.utilits.*
 
 

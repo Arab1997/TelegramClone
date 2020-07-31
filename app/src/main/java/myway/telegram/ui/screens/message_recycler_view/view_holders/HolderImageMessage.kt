@@ -1,4 +1,4 @@
-package myway.telegram.ui.fragments.message_recycler_view.view_holders
+package myway.telegram.ui.screens.message_recycler_view.view_holders
 
 import android.view.View
 import android.widget.ImageView
@@ -7,7 +7,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.message_item_image.view.*
 import myway.telegram.database.CURRENT_UID
-import myway.telegram.ui.fragments.message_recycler_view.views.MessageView
+import myway.telegram.ui.screens.message_recycler_view.views.MessageView
 import myway.telegram.utilits.asTime
 import myway.telegram.utilits.downloadAndSetImage
 
@@ -22,7 +22,7 @@ class HolderImageMessage(view: View):RecyclerView. ViewHolder(view){
 
 
     //------------- drawMessageImage-----------------//
-    private fun drawMessageImage(holder: HolderImageMessage, view: MessageView) {
+     fun drawMessageImage(holder: HolderImageMessage, view: MessageView) {
         if (view.from == CURRENT_UID) {
             holder.blocReceivedImageMessage.visibility = View.GONE
             holder.blocUserImageMessage.visibility = View.VISIBLE

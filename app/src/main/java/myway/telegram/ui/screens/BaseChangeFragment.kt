@@ -1,10 +1,7 @@
-package myway.telegram.ui.fragments
+package myway.telegram.ui.screens
 
-import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import com.mikepenz.materialize.util.KeyboardUtil.hideKeyboard
-import myway.telegram.MainActivity
 import myway.telegram.R
 import myway.telegram.utilits.APP_ACTIVITY
 import myway.telegram.utilits.hideKeyboard

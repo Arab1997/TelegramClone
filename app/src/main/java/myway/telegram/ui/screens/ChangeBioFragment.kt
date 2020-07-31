@@ -1,9 +1,8 @@
-package myway.telegram.ui.fragments
+package myway.telegram.ui.screens
 
 import kotlinx.android.synthetic.main.fragment_change_bio.*
 import myway.telegram.R
 import myway.telegram.database.*
-import myway.telegram.utilits.*
 
 
 class ChangeBioFragment : BaseChangeFragment(R.layout.fragment_change_bio) {
