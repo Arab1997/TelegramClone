@@ -13,6 +13,7 @@ import myway.telegram.models.UserModel
 import myway.telegram.utilits.APP_ACTIVITY
 import myway.telegram.utilits.AppValueEventListener
 import myway.telegram.utilits.showToast
+import java.io.File
 import java.util.ArrayList
 
 
@@ -226,4 +227,11 @@ fun uploadFileToStorage(uri: Uri, messageKey: String, receivedID: String, typeMe
             sendMessageAsFile(receivedID, it, messageKey, typeMessage)
         }
     }
+}
+
+ fun getFileFromStorage(mFile: File, fileUrl: String, function: () -> Unit) {
+    val path = REF_STORAGE_ROOT.storage.getReferenceFromUrl(fileUrl)
+    path.getFile(mFile)
+        .addOnSuccessListener { function() }
+        .addOnFailureListener { showToast(it.message.toString()) }
 }

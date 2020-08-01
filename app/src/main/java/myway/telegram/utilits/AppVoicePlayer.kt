@@ -1,6 +1,8 @@
 package myway.telegram.utilits
 
 import android.media.MediaPlayer
+import myway.telegram.database.REF_STORAGE_ROOT
+import myway.telegram.database.getFileFromStorage
 import java.io.File
 
 class AppVoicePlayer {
@@ -16,11 +18,11 @@ class AppVoicePlayer {
             }
         } else {
             mFile.createNewFile()
-          /*  getFileFromStorage(mFile, fileUrl) {
-                startPlay {
-                    function()
-                }
-            }*/
+              getFileFromStorage(mFile, fileUrl) {
+                  startPlay {
+                      function()
+                  }
+              }
         }
     }
 
@@ -56,7 +58,7 @@ class AppVoicePlayer {
         mMediaPlayer.release()
     }
 
-    fun init(){
+    fun init() {
         mMediaPlayer = MediaPlayer()
     }
 }

@@ -24,7 +24,7 @@ import myway.telegram.database.*
 import myway.telegram.models.CommonModel
 import myway.telegram.models.UserModel
 import myway.telegram.ui.screens.BaseFragment
-import myway.telegram.ui.screens.message_recycler_view.views.AppViewFactory
+import myway.telegram.ui.message_recycler_view.views.AppViewFactory
 import myway.telegram.utilits.*
 
 
@@ -220,5 +220,6 @@ class SingleChatFragment(private val contact: CommonModel) :
     override fun onDestroyView() {
         super.onDestroyView()
         mAppVoiceRecorder.releaseRecorder()
+        mAdapter.onDestroy()
     }
 }

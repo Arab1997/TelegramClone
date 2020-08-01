@@ -1,6 +1,6 @@
-package myway.telegram.ui.screens.message_recycler_view.views
+package myway.telegram.ui.message_recycler_view.views
 
-data class ViewImageMessage(
+data class ViewVoiceMessage(
     override val id: String,
     override val from: String,
     override val timeStamp: String,
@@ -8,11 +8,10 @@ data class ViewImageMessage(
     override val text: String = ""
 ) : MessageView {
     override fun getTypeView(): Int {
-        return MessageView.MESSAGE_IMAGE  //vozvrashaet  tip nashi view  shtobi adapter ponimal  tip unego seychas adresovan
+        return MessageView.MESSAGE_VOICE
     }
 
     override fun equals(other: Any?): Boolean {
         return (other as MessageView).id == id
     }
-
 }

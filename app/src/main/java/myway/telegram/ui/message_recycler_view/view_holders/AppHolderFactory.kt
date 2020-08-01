@@ -1,10 +1,10 @@
-package myway.telegram.ui.screens.message_recycler_view.view_holders
+package myway.telegram.ui.message_recycler_view.view_holders
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import myway.telegram.R
-import myway.telegram.ui.screens.message_recycler_view.views.MessageView
+import myway.telegram.ui.message_recycler_view.views.MessageView
 
 class AppHolderFactory {
     companion object{

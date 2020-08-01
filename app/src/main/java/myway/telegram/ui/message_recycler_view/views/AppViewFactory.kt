@@ -1,4 +1,4 @@
-package myway.telegram.ui.screens.message_recycler_view.views
+package myway.telegram.ui.message_recycler_view.views
 
 import myway.telegram.models.CommonModel
 import myway.telegram.utilits.TYPE_MESSAGE_IMAGE
