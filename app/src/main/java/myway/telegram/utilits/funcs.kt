@@ -2,7 +2,9 @@ package myway.telegram.utilits
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.provider.ContactsContract
+import android.provider.OpenableColumns
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.Toast
@@ -10,43 +12,47 @@ import androidx.fragment.app.Fragment
 import com.squareup.picasso.Picasso
 import myway.telegram.MainActivity
 import myway.telegram.R
+import myway.telegram.database.REF_STORAGE_ROOT
 import myway.telegram.database.updatePhonesToDatabase
 import myway.telegram.models.CommonModel
+import java.io.File
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
 
 /* Файл для хранения утилитарных функции, доступных во всем приложении */
 
-fun showToast(message:String){
+fun showToast(message: String) {
     /* Функция показывает сообщение */
-    Toast.makeText(APP_ACTIVITY,message,Toast.LENGTH_SHORT).show()
+    Toast.makeText(APP_ACTIVITY, message, Toast.LENGTH_SHORT).show()
 }
 
-fun restartActivity(){
+fun restartActivity() {
     /* Функция расширения для AppCompatActivity, позволяет запускать активити */
     val intent = Intent(APP_ACTIVITY, MainActivity::class.java)
     APP_ACTIVITY.startActivity(intent)
     APP_ACTIVITY.finish()
 }
 
-fun replaceFragment(fragment: Fragment, addStack:Boolean = true){
+fun replaceFragment(fragment: Fragment, addStack: Boolean = true) {
     /* Функция расширения для AppCompatActivity, позволяет устанавливать фрагменты */
-    if (addStack){
+    if (addStack) {
         APP_ACTIVITY.supportFragmentManager.beginTransaction()
             .addToBackStack(null)
-            .replace(R.id.data_container,
+            .replace(
+                R.id.data_container,
                 fragment
             ).commit()
     } else {
         APP_ACTIVITY.supportFragmentManager.beginTransaction()
-            .replace(R.id.data_container,
+            .replace(
+                R.id.data_container,
                 fragment
             ).commit()
     }
 
 }
-
 
 
 fun hideKeyboard() {
@@ -56,7 +62,7 @@ fun hideKeyboard() {
     imm.hideSoftInputFromWindow(APP_ACTIVITY.window.decorView.windowToken, 0)
 }
 
-fun ImageView.downloadAndSetImage(url:String){
+fun ImageView.downloadAndSetImage(url: String) {
     /* Функция раширения ImageView, скачивает и устанавливает картинку*/
     Picasso.get()
         .load(url)
@@ -93,8 +99,27 @@ fun initContacts() {
         updatePhonesToDatabase(arrayContacts)
     }
 }
+
 fun String.asTime(): String {
     val time = Date(this.toLong())
     val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
     return timeFormat.format(time)
+}
+
+fun getFilenameFromUri(uri: Uri): String {
+    var result = ""
+    val cursor = APP_ACTIVITY.contentResolver.query(uri, null, null, null, null)
+    try {
+        if (cursor != null && cursor.moveToFirst()) {
+            result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
+        }
+    } catch (e: Exception) {
+        showToast(e.message.toString())
+    } finally {
+        cursor?.close()
+        return result
+    }
+
+
+
 }
