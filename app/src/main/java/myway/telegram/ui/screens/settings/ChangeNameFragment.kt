@@ -1,8 +1,9 @@
-package myway.telegram.ui.screens
+package myway.telegram.ui.screens.settings
 
 import kotlinx.android.synthetic.main.fragment_change_name.*
 import myway.telegram.R
 import myway.telegram.database.*
+import myway.telegram.ui.screens.BaseChangeFragment
 import myway.telegram.utilits.*
 
 class ChangeNameFragment : BaseChangeFragment(R.layout.fragment_change_name) {

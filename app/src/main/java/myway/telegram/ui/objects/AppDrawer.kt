@@ -17,7 +17,7 @@ import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader
 import com.mikepenz.materialdrawer.util.DrawerImageLoader
 import myway.telegram.R
 import myway.telegram.ui.screens.ContactsFragment
-import myway.telegram.ui.screens.SettingsFragment
+import myway.telegram.ui.screens.settings.SettingsFragment
 import myway.telegram.utilits.APP_ACTIVITY
 import myway.telegram.database.USER
 import myway.telegram.utilits.downloadAndSetImage

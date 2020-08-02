@@ -1,4 +1,4 @@
-package myway.telegram.ui.screens
+package myway.telegram.ui.screens.settings
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
@@ -10,6 +10,7 @@ import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.android.synthetic.main.fragment_settings.*
 import myway.telegram.R
 import myway.telegram.database.*
+import myway.telegram.ui.screens.BaseFragment
 import myway.telegram.utilits.*
 
 

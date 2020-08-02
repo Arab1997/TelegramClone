@@ -38,4 +38,6 @@
     <string name="toast_data_update">Данные обнавлены</string>
     <string name="messages">Сообщение</string>
     <string name="todo">TODO</string>
+    <string name="clear_chats">Очистить чат</string>
+    <string name="delete_chats">Удалить чат</string>
 </resources>
