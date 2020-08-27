@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.main_list_item.view.*
 import myway.telegram.R
 import myway.telegram.models.CommonModel
@@ -21,7 +22,7 @@ class MainListAdapter : RecyclerView.Adapter<MainListAdapter.MainListHolder>() {
     class MainListHolder(view: View) : RecyclerView.ViewHolder(view) {
         val itemName: TextView = view.main_list_item_name
         val itemLastMessage: TextView = view.main_list_last_message
-        val itemPhoto: ImageView = view.main_list_item_photo
+        val itemPhoto: CircleImageView = view.main_list_item_photo
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainListHolder {

@@ -3,7 +3,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="settings_default_username">Abdulloh Makhmudov</string>
-    <string name="settings_default_status">в сети</string>
+    <string name="settings_default_status">online</string>
     <string name="settings_default_number">+998933769197</string>
     <string name="settings_label_phone_number">Нажмите, чтобы изменить номер телефона</string>
     <string name="settings_default_login">abdullomakhmudov</string>

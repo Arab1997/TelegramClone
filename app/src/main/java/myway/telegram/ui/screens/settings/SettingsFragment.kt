@@ -10,7 +10,7 @@ import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.android.synthetic.main.fragment_settings.*
 import myway.telegram.R
 import myway.telegram.database.*
-import myway.telegram.ui.screens.BaseFragment
+import myway.telegram.ui.screens.base.BaseFragment
 import myway.telegram.utilits.*
 
 

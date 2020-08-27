@@ -3,7 +3,7 @@ package myway.telegram.ui.screens.settings
 import kotlinx.android.synthetic.main.fragment_change_username.*
 import myway.telegram.R
 import myway.telegram.database.*
-import myway.telegram.ui.screens.BaseChangeFragment
+import myway.telegram.ui.screens.base.BaseChangeFragment
 import myway.telegram.utilits.*
 import java.util.*
 

@@ -1,4 +1,4 @@
-package myway.telegram.ui.screens
+package myway.telegram.ui.screens.contacts
 
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.fragment_contacts.*
 import myway.telegram.R
 import myway.telegram.database.*
 import myway.telegram.models.CommonModel
+import myway.telegram.ui.screens.base.BaseFragment
 import myway.telegram.ui.screens.single_chat.SingleChatFragment
 import myway.telegram.utilits.*
 
@@ -51,7 +52,9 @@ class ContactsFragment : BaseFragment(R.layout.fragment_contacts) {
                 //Запускается тогда когда адаптер получает доступ к ViewGroup
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.contact_item, parent, false)
-                return ContactsHolder(view)
+                return ContactsHolder(
+                    view
+                )
             }
 
             // Заполняет holder

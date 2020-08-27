@@ -1,7 +1,6 @@
 package myway.telegram.ui.screens.single_chat
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.view.*
@@ -24,9 +23,9 @@ import myway.telegram.R
 import myway.telegram.database.*
 import myway.telegram.models.CommonModel
 import myway.telegram.models.UserModel
-import myway.telegram.ui.screens.BaseFragment
+import myway.telegram.ui.screens.base.BaseFragment
 import myway.telegram.ui.message_recycler_view.views.AppViewFactory
-import myway.telegram.ui.screens.settings.ChangeNameFragment
+import myway.telegram.ui.screens.main_list.MainListFragment
 import myway.telegram.utilits.*
 
 
@@ -280,8 +279,17 @@ class SingleChatFragment(private val contact: CommonModel) :
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         /* Слушатель выбора пунктов выпадающего меню */
         when (item.itemId) {
-
+            R.id.menu_clear ->clearChat(contact.id){
+                showToast("Чат очищен")
+                replaceFragment(MainListFragment())
+            }
+            R.id.menu_delete_chat ->deleteChat(contact.id) {
+                showToast("Чат удален")
+                replaceFragment(MainListFragment())
+            }
         }
         return true
     }
+
+
 }
