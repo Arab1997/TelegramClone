@@ -298,7 +298,7 @@ fun createGroupToDatabase(
     val pathStorage = REF_STORAGE_ROOT.child(FOLDER_GROUPS_IMAGES).child(keyGroup)
 
     putFileToStorage(uri, pathStorage) {        //lyamda funciotn
-        getUrlFromStorage(pathStorage) {it->
+        getUrlFromStorage(pathStorage) { it ->
             val mapData = hashMapOf<String, Any>()
             mapData[CHILD_ID] = keyGroup
             mapData[CHILD_FULLNAME] = nameGroup
@@ -313,9 +313,19 @@ fun createGroupToDatabase(
             mapData[NODE_MEMBERS] = mapMembers
 
             path.updateChildren(mapData)
-                .addOnSuccessListener { function() }
-                .addOnFailureListener { showToast(it.message.toString()) }
+                .addOnSuccessListener {
+                    function()
+                    if (uri == Uri.EMPTY) {
+                        putFileToStorage(uri, pathStorage) {
 
+                            path.child(CHILD_FILE_URL).setValue(it)
+                            getUrlFromStorage(pathStorage) {
+                                mapData[CHILD_FILE_URL] = it
+                            }
+                        }
+                    }
+                }
+                .addOnFailureListener { showToast(it.message.toString()) }
         }
     }
 
