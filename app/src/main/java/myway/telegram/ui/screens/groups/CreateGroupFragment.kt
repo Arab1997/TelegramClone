@@ -45,9 +45,6 @@ class CreateGroupFragment(private var listContacts: List<CommonModel>) :
         create_group_counts.text = getPlurals(listContacts.size)
 
     }
-
-
-
     private fun addPhoto() {
         /* Изменения фото пользователя */
         CropImage.activity()
@@ -63,8 +60,6 @@ class CreateGroupFragment(private var listContacts: List<CommonModel>) :
         mRecyclerView.adapter = mAdapter
         listContacts.forEach { mAdapter.updateListItems(it) }
     }
-
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         /* Активность которая запускается для получения картинки для фото пользователя */
         super.onActivityResult(requestCode, resultCode, data)

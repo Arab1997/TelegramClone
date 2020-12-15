@@ -20,7 +20,7 @@ class SingleChatAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun getItemCount(): Int = mListMessagesCache.size
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as MessageHolder).drawMessage(mListMessagesCache[position])
+         (holder as MessageHolder).drawMessage(mListMessagesCache[position])
     }
 // eto func otrabativaet kogda nash holder poyavitsa na ekrane
     override fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder) {
