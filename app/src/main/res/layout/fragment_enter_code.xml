@@ -9,14 +9,14 @@
 
     <ImageView
         android:id="@+id/register_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="147dp"
+        android:layout_height="95dp"
         android:layout_marginTop="@dimen/vertical_large_margin"
+        android:contentDescription="@string/cd_register_image"
         android:src="@drawable/register_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/cd_register_image" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/register_text_enter_code"
